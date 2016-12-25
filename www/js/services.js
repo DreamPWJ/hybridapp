@@ -664,8 +664,16 @@ angular.module('starter.services', [])
 
         return config;
       },
-      responseError: function (response) {
+      requestError: function (request) {
         // ...
+      },
+      response: function (response) {
+        // do something on success
+
+      },
+      responseError: function (response) {
+        // do something on error
+
       }
-    };
+    }
   })

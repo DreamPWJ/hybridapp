@@ -3,6 +3,7 @@ angular.module('starter.controllers', [])
     //服务注册到$httpProvider.interceptors中  用于接口授权
     // $httpProvider.interceptors.push('AuthInterceptor');
     /* $httpProvider.defaults.headers.common['Authorization'] = localStorage.getItem('token');*/
+/*    $http.defaults.cache = true/false;*/
   })
 
 
