@@ -513,7 +513,7 @@ angular.module('starter.services', [])
           timestamp: timestamp, // 必填，生成签名的时间戳
           nonceStr: nonceStr, // 必填，生成签名的随机串
           signature: signature,// 必填，签名，见附录1
-          jsApiList: ['checkJsApi', 'chooseImage', 'uploadImage', 'getLocation', 'scanQRCode', 'chooseWXPay', 'onMenuShareAppMessage', 'onMenuShareTimeline', 'onMenuShareQQ', 'onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          jsApiList: ['checkJsApi', 'chooseImage', 'uploadImage', 'getLocation', 'openAddress','scanQRCode', 'chooseWXPay', 'onMenuShareAppMessage', 'onMenuShareTimeline', 'onMenuShareQQ', 'onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
       },
       wxcheckJsApi: function () { //判断当前客户端版本是否支持指定微信 JS SDK接口
@@ -582,17 +582,45 @@ angular.module('starter.services', [])
           }
         });
       },
-      wxchooseWXPay: function () {//微信支付请求接口
-        wx.chooseWXPay({
-          timestamp: 0, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
-          nonceStr: '', // 支付签名随机串，不长于 32 位
-          package: '', // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
-          signType: '', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
-          paySign: '', // 支付签名
+      wxopenAddress: function ($scope) {//编辑并获取收货地址
+        wx.openAddress({
           success: function (res) {
-            // 支付成功后的回调函数
+
+          },
+          cancel: function () {
+            // 用户取消拉出地址
           }
         });
+      },
+      wxchooseWXPay: function (data) {//微信支付请求接口
+        function onBridgeReady() {
+          WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+              "appId": "wx7a6a63e9ee94e24d",     //公众号名称，由商户传入
+              "timeStamp": data.timeStamp,         //时间戳，自1970年以来的秒数
+              "nonceStr": data.nonceStr, //随机串
+              "package": data.package,
+              "signType": "MD5",         //微信签名方式:
+              "paySign": data.paySign //微信签名
+            },
+            function (res) {
+              // alert(JSON.stringify(res));
+              console.log(res.err_msg);  // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返
+            }
+          );
+        }
+
+        if (typeof WeixinJSBridge == "undefined") {
+          if (document.addEventListener) {
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+          } else if (document.attachEvent) {
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+          }
+        } else {
+          onBridgeReady();
+        }
+
       },
       wxonMenuShareAppMessage: function (title, desc, link, imgUrl) { //获取“分享给朋友”按钮点击状态及自定义分享内容接口
         wx.onMenuShareAppMessage({
