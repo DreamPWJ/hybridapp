@@ -157,8 +157,8 @@
   margin-top: 1rem;
 }
 
-.buttons.buttons-left .ion-ios-arrow-back:before{
-  font-size: 1.8rem!important;
+.buttons.buttons-left .ion-ios-arrow-left:before{
+/*  font-size: 1.8rem!important;*/
 }
 
 .button.back-button {
