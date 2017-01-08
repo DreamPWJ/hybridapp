@@ -124,8 +124,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     $ionicConfigProvider.platform.ios.navBar.alignTitle('center');
     $ionicConfigProvider.platform.android.navBar.alignTitle('center');
 
-    $ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-chevron-left');
-    $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-chevron-left');
+    $ionicConfigProvider.platform.ios.backButton.previousTitleText('').icon('ion-ios-arrow-left');
+    $ionicConfigProvider.platform.android.backButton.previousTitleText('').icon('ion-ios-arrow-left');
 
     $ionicConfigProvider.platform.ios.views.transition('ios');
     $ionicConfigProvider.platform.android.views.transition('android');
