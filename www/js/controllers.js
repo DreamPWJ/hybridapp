@@ -1,14 +1,19 @@
 angular.module('starter.controllers', [])
   .config(function ($httpProvider) { //统一配置设置
     //服务注册到$httpProvider.interceptors中  用于接口授权
-     $httpProvider.interceptors.push('MyInterceptor');
+    $httpProvider.interceptors.push('MyInterceptor');
     /* $httpProvider.defaults.headers.common['Authorization'] = localStorage.getItem('token');*/
-/*    $http.defaults.cache = true/false;*/
+    /*    $http.defaults.cache = true/false;*/
   })
 
 
   //APP首页面
-  .controller('MainCtrl', function ($scope, $rootScope, CommonService,$ionicHistory) {
+  .controller('MainCtrl', function ($scope, $rootScope, CommonService, $ionicHistory) {
+    $scope.imgsPicAddr = [];//图片信息数组
+    $scope.imageList = [];  //上传图片数组集合
+    $scope.uploadActionSheet = function () {
+      CommonService.uploadActionSheet($scope, "upload", true);
+    }
     //在首页中清除导航历史退栈
     $scope.$on('$ionicView.afterEnter', function () {
       $ionicHistory.clearHistory();

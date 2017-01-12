@@ -189,7 +189,8 @@ angular.module('starter.services', [])
         });
 
       },
-      uploadActionSheet: function ($scope, filename) {
+      uploadActionSheet: function ($scope, filename,isSingle) {//上传图片  isSingle是否是单张上传
+        isSingle = (isSingle == undefined) ? false : isSingle;
         CommonService = this;
         $ionicActionSheet.show({
           cssClass: 'action-s',
@@ -205,10 +206,10 @@ angular.module('starter.services', [])
           buttonClicked: function (index) {
             switch (index) {
               case 0:
-                CommonService.takePicture($scope, 0, filename)
+                CommonService.takePicture($scope, 0, filename,isSingle)
                 break;
               case 1:
-                CommonService.takePicture($scope, 1, filename)
+                CommonService.takePicture($scope, 1, filename,isSingle)
                 break;
               default:
                 break;
@@ -218,7 +219,7 @@ angular.module('starter.services', [])
         });
       },
       //调用摄像头和相册 type 0是图库 1是拍照
-      takePicture: function ($scope, type, filenames) {
+      takePicture: function ($scope, type, filenames,isSingle) {
         //统计上传成功数量
         $scope.imageSuccessCount = 0;
         //是否是微信
@@ -231,7 +232,7 @@ angular.module('starter.services', [])
           })
           return;
         }
-        if (type == 0) {//图库
+        if (type == 0 && !isSingle) {//图库
           var options = {
             maximumImagesCount: 6 - $scope.imageList.length,//需要显示的图片的数量
             width: 800,
@@ -249,7 +250,7 @@ angular.module('starter.services', [])
             $cordovaToast.showLongCenter('获取图片失败');
           });
         }
-        if (type == 1) {  //拍照
+        if (type == 1|| (type == 0 && isSingle)) {  //拍照
           //$cordovaCamera.cleanup();
           var options = {
             quality: 100,//相片质量0-100
@@ -277,7 +278,7 @@ angular.module('starter.services', [])
         }
 
       },
-      getLocation: function () { //获取当前经纬度
+      getLocation: function (callback) { //获取当前经纬度
         //是否是微信
         if (WeiXinService.isWeiXin()) {
           //通过config接口注入权限验证配置
@@ -295,6 +296,7 @@ angular.module('starter.services', [])
           .then(function (position) {
             localStorage.setItem("latitude", position.coords.latitude);
             localStorage.setItem("longitude", position.coords.longitude);
+            callback.call(this);
           }, function (err) {
             CommonService.platformPrompt("获取定位失败", 'close');
           });
