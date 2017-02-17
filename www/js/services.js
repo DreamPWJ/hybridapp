@@ -157,7 +157,7 @@ angular.module('starter.services', [])
                 //通过默认浏览器打开
                 window.open(barcodeData.text, '_system', 'location=yes');
               } else {
-                $cordovaToast.showShortCenter('扫一扫信息:', barcodeData.text);
+                $cordovaToast.showShortCenter('扫一扫信息:'+ barcodeData.text);
               }
             }, function (error) {
               $cordovaToast.showShortCenter('扫描失败,请重新扫描');
