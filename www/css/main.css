@@ -1,3 +1,17 @@
+
+.border-rb {
+  border-right: 1px solid rgba(221, 221, 221, 0.3);
+  border-bottom: 1px solid rgba(221, 221, 221, 0.3);
+}
+
+.border-r {
+  border-right: 1px solid rgba(221, 221, 221, 0.3);
+}
+
+.border-b {
+  border-bottom: 1px solid rgba(221, 221, 221, 0.3);
+}
+
 .tool-tip {
   position: fixed;
   z-index: 10000;
