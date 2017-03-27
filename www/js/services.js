@@ -91,33 +91,34 @@ angular.module('starter.services', [])
         });
       }
       ,
-      ionicPopover: function ($scope, templateUrl) {
+      ionicPopover: function ($scope, templateUrl,index) {//页面出现多个Popover框的情况 进行命名区别 index 可以为1.2.3
+        index = index == undefined ? "" : index;
         $ionicPopover.fromTemplateUrl('templates/popover/' + templateUrl, {
           scope: $scope,
         }).then(function (popover) {
-          $scope.popover = popover;
+          $scope["popover"+index] = popover;
         });
         $scope.openPopover = function ($event) {
-          $scope.popover.show($event);
+          $scope["popover"+index].show($event);
           //动态计算popover高度
           $rootScope.popoversize = document.querySelectorAll("#mypopover a").length * 55 + 'px';
         };
         $scope.closePopover = function () {
-          $scope.popover.hide();
+          $scope["popover"+index].hide();
         };
         //Cleanup the popover when we're done with it! 清除浮动框
         $scope.$on('$destroy', function () {
-          $scope.popover.remove();
+          $scope["popover"+index].remove();
         });
         $scope.$on('$ionicView.leave', function () {
-          $scope.popover.hide();
+          $scope["popover"+index].hide();
         });
         // 在隐藏浮动框后执行
-        $scope.$on('popover.hidden', function () {
+        $scope.$on('popover'+index+'.hidden', function () {
           // Execute action
         });
         // 移除浮动框后执行
-        $scope.$on('popover.removed', function () {
+        $scope.$on('popover'+index+'.removed', function () {
           // Execute action
         });
       },
