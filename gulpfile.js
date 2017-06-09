@@ -1,3 +1,5 @@
+/*cnpm install --save-dev gulp gulp-util bower gulp-concat gulp-sass gulp-minify-css gulp-rename shelljs gulp-autoprefixer gulp-uglify gulp-useref gulp-if del gulp-imagemin gulp-cache*/
+
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
