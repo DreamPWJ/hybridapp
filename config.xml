@@ -9,7 +9,6 @@
     </author>
   <content src="index.html"/>
   <access origin="*"/>
-  <access origin="*"/>
   <allow-intent href="http://*/*" />
   <allow-intent href="https://*/*" />
   <access origin="tel:*" launch-external="yes"/>
