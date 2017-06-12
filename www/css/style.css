@@ -169,6 +169,10 @@
   border: none;
 }
 
+.bar-header .button:not(.ion-ios-arrow-left):before{
+  font-size: 1.5rem!important;
+}
+
 /* 去掉时候点击按钮灰色边框颜色*/
 .button.active, .button.activated {
   border-color: transparent !important;
