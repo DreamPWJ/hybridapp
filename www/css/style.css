@@ -136,6 +136,10 @@
   width: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
 /*loading加载框去掉背景*/
 /*.loading-container .loading {
   background-color: rgba(0, 0, 0, 0);
