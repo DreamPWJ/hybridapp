@@ -83,21 +83,25 @@ angular.module('starter.directive', [])
             }
           }
         }
-        scope.checkForm = function (value, content, type, maxvalue) {
+        scope.checkForm = function (value, content, type, regular, isShow, maxvalue) {
+          var isShow = isShow || true;
+          if (type == 'regular') {//自定义正则验证
+            scope.publicCheckForm(eval(regular).test(value), value, content, isShow)
+          }
           if (type == 'mobilephone') {//验证手机号
-            scope.publicCheckForm(/^1(3|4|5|7|8)\d{9}$/.test(value), value, content,true)
+            scope.publicCheckForm(/^1(3|4|5|7|8)\d{9}$/.test(value), value, content, isShow)
           }
           if (type == 'maxvalue') {//最大不能超过maxvalue值
-            scope.publicCheckForm(value > 0 && value <= maxvalue, value, content,true);
+            scope.publicCheckForm(value > 0 && value <= maxvalue, value, content, isShow);
           }
           if (type == 'positivenumber') {//正数验证(如 价格)
-            scope.publicCheckForm(/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/.test(value), value, content,true)
+            scope.publicCheckForm(/^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$/.test(value), value, content, isShow)
           }
           if (type == 'positiveinteger') {//正整数
-            scope.publicCheckForm(/^[1-9]\d*$/.test(value), value, content,true);
+            scope.publicCheckForm(/^[1-9]\d*$/.test(value), value, content, isShow);
           }
           if (type == 'identitycard') {//验证身份证号
-            scope.publicCheckForm(/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test(value), value, content,false)
+            scope.publicCheckForm(/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/.test(value), value, content, isShow)
           }
         };
         scope.checkAtLeastOne = function (array,keystr){  //检测相同遍历数据至少填写一个
