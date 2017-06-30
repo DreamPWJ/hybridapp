@@ -20,7 +20,7 @@ angular.module('starter.services', [])
           title: title,
           template: template,
           okText: '确定',
-          okType: 'button-calm'
+          okType: 'button-positive'
         });
         alertPopup.then(function (res) {
           if (stateurl == null || stateurl == '') {
@@ -40,7 +40,7 @@ angular.module('starter.services', [])
           template: template,
           okText: okText,
           cancelText: cancelText,
-          okType: 'button-calm',
+          okType: 'button-positive',
           cancelType: 'button-assertive'
         });
 
@@ -125,7 +125,7 @@ angular.module('starter.services', [])
 
       ionicLoadingShow: function (content) {
         $ionicLoading.show({
-          template: '<ion-spinner icon="bubbles" class="spinner-calm"></ion-spinner><p>' + (content ? content : '') + '</p>',
+          template: '<ion-spinner icon="bubbles" class="spinner-positive"></ion-spinner><p>' + (content ? content : '') + '</p>',
           animation: 'fade-in',
           showBackdrop: false
 
@@ -196,10 +196,10 @@ angular.module('starter.services', [])
         CommonService = this;
         $ionicActionSheet.show({
           cssClass: 'action-s',
-          titleText: '上传照片',
+          titleText: '上传图片',
           buttons: [
-            {text: '图库'},
             {text: '拍照'},
+            {text: '从手机相册选择'},
           ],
           cancelText: '取消',
           cancel: function () {
@@ -208,10 +208,10 @@ angular.module('starter.services', [])
           buttonClicked: function (index) {
             switch (index) {
               case 0:
-                CommonService.takePicture($scope, 0, filename, isSingle)
+                CommonService.takePicture($scope, 1, filename, isSingle)
                 break;
               case 1:
-                CommonService.takePicture($scope, 1, filename, isSingle)
+                CommonService.takePicture($scope, 0, filename, isSingle)
                 break;
               default:
                 break;
@@ -235,19 +235,18 @@ angular.module('starter.services', [])
           return;
         }
         if (type == 0 && !isSingle) {//图库
-          var options = {
+/*          var options = {
             maximumImagesCount: 6 - $scope.imageList.length,//需要显示的图片的数量
             width: 800,
             height: 800,
             quality: 80
-          };
+          };*/
           $cordovaImagePicker.getPictures(options).then(function (results) {
             $scope.imageUploadCount = results.length;
             for (var i = 0, len = results.length; i < len; i++) {
               $scope.imageList.push(results[i]);
               AccountService.addFilenames($scope, {filenames: filenames}, results[i]);
             }
-
           }, function (error) {
             $cordovaToast.showLongCenter('获取图片失败');
           });
@@ -419,7 +418,7 @@ angular.module('starter.services', [])
           template: updatecontent, //从服务端获取更新的内容
           cancelText: '稍后再说',
           okText: '立刻更新',
-          okType: 'button-calm',
+          okType: 'button-positive',
           cancelType: 'button-assertive'
         });
         confirmPopup.then(function (res) {
