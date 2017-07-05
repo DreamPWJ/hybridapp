@@ -2,18 +2,28 @@ angular.module('starter.services', [])
 //service在使用this指针，而factory直接返回一个对象
   .service('CommonService', function ($ionicPopup, $ionicPopover, $rootScope, $state, $ionicModal, $cordovaCamera, $cordovaImagePicker, $ionicPlatform, $ionicActionSheet, $ionicHistory, $timeout, $cordovaToast, $cordovaGeolocation, $cordovaBarcodeScanner, $ionicViewSwitcher, $ionicLoading, AccountService, WeiXinService) {
     return {
-      platformPrompt: function (msg, stateurl) {
+      platformPrompt: function (msg, stateurl, stateparams) {
+        CommonService = this;
+        $rootScope.commonService = CommonService;
         if ($ionicPlatform.is('android') || $ionicPlatform.is('ios')) {
           try {
             $cordovaToast.showLongCenter(msg);
           } catch (e) {
-            this.showAlert("标题", msg, stateurl);
+            $rootScope.commonService.toolTip(msg, "tool-tip-message-success");
           }
         } else {
-          this.showAlert("标题", msg, stateurl);
+          $rootScope.commonService.toolTip(msg, "tool-tip-message-success");
+        }
+
+        if (stateurl == null || stateurl == '') {
+          $ionicHistory.goBack();
+        } else if (stateurl == 'close') {//不处理
+
+        } else {
+          $state.go(stateurl, stateparams, {reload: true});
         }
       },
-      showAlert: function (title, template, stateurl) {
+      showAlert: function (title, template, stateurl, stateparams) {
         // 一个提示对话框
         var alertPopup = $ionicPopup.alert({
           cssClass: "show-alert",
@@ -28,12 +38,12 @@ angular.module('starter.services', [])
           } else if (stateurl == 'close') {//不处理
 
           } else {
-            $state.go(stateurl, {}, {reload: true});
+            $state.go(stateurl, stateparams, {reload: true});
           }
 
         });
       },
-      showConfirm: function (title, template, okText, cancelText, stateurl, closeurl, confirmfunction) {
+      showConfirm: function (title, template, okText, cancelText, stateurl, closeurl, confirmfunction, stateparams) {
         var confirmPopup = $ionicPopup.confirm({
           cssClass: "show-confirm",
           title: '<strong>' + title + '</strong>',
@@ -41,13 +51,13 @@ angular.module('starter.services', [])
           okText: okText,
           cancelText: cancelText,
           okType: 'button-positive',
-          cancelType: 'button-assertive'
+          cancelType: 'button-balanced'
         });
 
         confirmPopup.then(function (res) {
           if (res) {
             if (stateurl != '') {
-              $state.go(stateurl, {}, {reload: true});
+              $state.go(stateurl, stateparams, {reload: true});
               $ionicViewSwitcher.nextDirection("forward");//前进画效果
             } else {
               confirmfunction();
@@ -57,12 +67,11 @@ angular.module('starter.services', [])
             if (closeurl == 'close') {//不处理
               return;
             }
-            $state.go((closeurl == null || closeurl == '') ? 'tab.main' : closeurl, {}, {reload: true})
+            $state.go((closeurl == null || closeurl == '') ? 'tab.main' : closeurl, stateparams, {reload: true})
             $ionicViewSwitcher.nextDirection("back");//后退动画效果
           }
         });
       },
-
       customModal: function ($scope, templateurl, index, animation) { //自定义modal ndex页面出现多个模态框的情况 进行命名区别 index 可以为1.2.3.   animation动画slide-in-left slide-in-right
         index = index == undefined ? "" : index;
         $ionicModal.fromTemplateUrl(templateurl, {

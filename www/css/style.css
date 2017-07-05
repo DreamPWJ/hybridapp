@@ -275,3 +275,8 @@ a {
     margin: 0 !important;
     padding: 0 !important;
 }
+
+input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], select[readonly], textarea[disabled], textarea[readonly]:not(.cloned-text-input) {
+  background-color: #ffffff;
+  cursor: not-allowed;
+}
