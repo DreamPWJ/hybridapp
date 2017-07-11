@@ -280,3 +280,8 @@ input[disabled], input[readonly]:not(.cloned-text-input), select[disabled], sele
   background-color: #ffffff;
   cursor: not-allowed;
 }
+
+.bar-positive {
+  /*  background-color: transparent;*/
+  background-image: none !important;
+}
