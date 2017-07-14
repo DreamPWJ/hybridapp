@@ -98,18 +98,57 @@
 }
 
 /*修改覆盖弹出框默认样式*/
-.show-alert .popup, .show-confirm .popup {
-    text-align: center;
-    background-color: #fff !important;
+
+.show-alert .popup, .show-confirm .popup, .show-updateconfirm .popup {
+  text-align: center;
+  background-color: #fff !important;
+  border-radius: 0.5rem;
 }
 
-.show-alert .popup .popup-head, .show-confirm .popup .popup-head {
-    border: none;
+.show-alert .popup .popup-head, .show-confirm .popup .popup-head, .show-updateconfirm .popup .popup-head {
+  border: none;
+  height: 1.6rem !important;
+  min-height: 1.6rem !important;
 }
 
-.show-alert .popup .popup-body p, .show-confirm .popup .popup-body p {
-    margin: 0;
-    padding: 0;
+.show-alert .popup .popup-title, .show-confirm .popup .popup-title, .show-updateconfirm .popup .popup-title {
+  line-height: 0.2rem;
+  color: #585858;
+}
+
+/*.show-alert .popup .popup-body, .show-confirm .popup .popup-body, .show-updateconfirm .popup .popup-body {
+
+}*/
+
+.show-alert .popup .popup-buttons, .show-confirm .popup .popup-buttons, .show-updateconfirm .popup .popup-buttons {
+  min-height: 2.6rem !important;
+  padding: 0;
+  border-top: 1px solid rgba(221, 221, 221, 0.3) !important;
+
+}
+
+.show-alert .button, .show-confirm .button, .show-updateconfirm .button {
+  margin: 0;
+  padding: 0;
+  bottom: 0rem;
+  height: 2.6rem !important;
+  min-height: 2.6rem !important;
+  background-color: #ffffff;
+
+}
+
+.show-alert .button:first-child, .show-confirm .button:first-child, .show-updateconfirm .button:first-child {
+  color: #33cd5f;
+  border-radius: 0 0 0rem 0.5rem;
+}
+
+.show-alert .button:last-child, .show-confirm .button:last-child, .show-updateconfirm .button:last-child {
+  border-radius: 0 0 0.5rem 0rem;
+}
+
+.show-alert .button:nth-child(2), .show-confirm .button:nth-child(2), .show-updateconfirm .button:nth-child(2) {
+  border-left: 1px solid rgba(221, 221, 221, 0.3);
+  color: #00ACFF !important;
 }
 
 /*修改覆盖ActionSheet框默认样式*/

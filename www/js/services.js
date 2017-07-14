@@ -30,7 +30,7 @@ angular.module('starter.services', [])
           title: title,
           template: template,
           okText: '确定',
-          okType: 'button-positive'
+          okType: 'button-stable'
         });
         alertPopup.then(function (res) {
           if (stateurl == null || stateurl == '') {
@@ -50,8 +50,8 @@ angular.module('starter.services', [])
           template: template,
           okText: okText,
           cancelText: cancelText,
-          okType: 'button-positive',
-          cancelType: 'button-balanced'
+          okType: 'button-stable',
+          cancelType: 'button-stable'
         });
 
         confirmPopup.then(function (res) {
@@ -427,13 +427,13 @@ angular.module('starter.services', [])
           template: updatecontent, //从服务端获取更新的内容
           cancelText: '稍后再说',
           okText: '立刻更新',
-          okType: 'button-positive',
-          cancelType: 'button-assertive'
+          okType: 'button-stable',
+          cancelType: 'button-stable'
         });
         confirmPopup.then(function (res) {
           if (res) {
             $ionicLoading.show({
-              template: "已经下载：0%",
+              template: "0%",
               noBackdrop: true
             });
             var url = appurl; //可以从服务端获取更新APP的路径
@@ -463,7 +463,7 @@ angular.module('starter.services', [])
               $timeout(function () {
                 var downloadProgress = (progress.loaded / progress.total) * 100;
                 $ionicLoading.show({
-                  template: "已经下载：" + Math.floor(downloadProgress) + "%",
+                  template: "" + Math.floor(downloadProgress) + "%",
                   noBackdrop: true
                 });
                 if (downloadProgress > 99) {
