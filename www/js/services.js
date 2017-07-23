@@ -295,7 +295,7 @@ angular.module('starter.services', [])
           WeiXinService.weichatConfig(localStorage.getItem("timestamp"), localStorage.getItem("noncestr"), localStorage.getItem("signature"));
           //通过ready接口处理成功验证
           wx.ready(function () {
-            WeiXinService.wxgetLocation(); //获取地理位置接口
+            WeiXinService.wxgetLocation(callback); //获取地理位置接口
           })
           return;
         }
@@ -463,7 +463,7 @@ angular.module('starter.services', [])
               $timeout(function () {
                 var downloadProgress = (progress.loaded / progress.total) * 100;
                 $ionicLoading.show({
-                  template: "" + Math.floor(downloadProgress) + "%",
+                  template: Math.floor(downloadProgress) + "%",
                   noBackdrop: true
                 });
                 if (downloadProgress > 99) {
@@ -572,7 +572,7 @@ angular.module('starter.services', [])
           }
         });
       },
-      wxgetLocation: function () { //获取地理位置接口
+      wxgetLocation: function (callback) { //获取地理位置接口
         wx.getLocation({
           type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
           success: function (res) {
@@ -582,6 +582,7 @@ angular.module('starter.services', [])
             var accuracy = res.accuracy; // 位置精度
             localStorage.setItem("latitude", latitude);
             localStorage.setItem("longitude", longitude);
+            callback.call(this);
           }
         });
       },
