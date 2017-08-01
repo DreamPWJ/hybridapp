@@ -91,11 +91,11 @@ angular.module('starter.services', [])
           $scope["modal" + index].remove();
         });
         // 当隐藏的模型时执行动作
-        $scope.$on('modal' + index + '.hide', function () {
+        $scope.$on('modal.hidden', function () {
           // 执行动作
         });
         // 当移动模型时执行动作
-        $scope.$on('modal' + index + '.removed', function () {
+        $scope.$on('modal.removed', function () {
           // 执行动作
         });
       }
