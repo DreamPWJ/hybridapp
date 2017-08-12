@@ -43,7 +43,7 @@ angular.module('starter.services', [])
 
         });
       },
-      showConfirm: function (title, template, okText, cancelText, stateurl, closeurl, confirmfunction, stateparams) {
+      showConfirm: function (title, template, okText, cancelText, stateurl, closeurl, confirmfunction, stateparams,stateparams2) {
         var confirmPopup = $ionicPopup.confirm({
           cssClass: "show-confirm",
           title: '<strong>' + title + '</strong>',
@@ -67,7 +67,7 @@ angular.module('starter.services', [])
             if (closeurl == 'close') {//不处理
               return;
             }
-            $state.go((closeurl == null || closeurl == '') ? 'tab.main' : closeurl, stateparams, {reload: true})
+            $state.go((closeurl == null || closeurl == '') ? 'tab.main' : closeurl, stateparams2, {reload: true})
             $ionicViewSwitcher.nextDirection("back");//后退动画效果
           }
         });
@@ -703,16 +703,17 @@ angular.module('starter.services', [])
         if (config.url.toString().indexOf('http://') === 0) {
           //http请求Loading加载动画
           $injector.get('$ionicLoading').show({
-            template: '<ion-spinner icon="spiral" class="spinner-light"></ion-spinner><p>',
+            template: '<p><ion-spinner icon="spiral" class="spinner-light"></ion-spinner></p>',
             noBackdrop: true
           });
+          //授权
+          config.headers = config.headers || {};
+          var token = localStorage.getItem('token');
+          if (token) {
+            config.headers.authorization = token;
+          }
         }
-        //授权
-        config.headers = config.headers || {};
-        var token = localStorage.getItem('token');
-        if (token) {
-          config.headers.authorization = token;
-        }
+
         return config;
       },
       requestError: function (config) {//通过实现 requestError 方法拦截请求异常: 请求发送失败或者被拦截器拒绝
@@ -730,6 +731,13 @@ angular.module('starter.services', [])
       responseError: function (response) {////通过实现 responseError 方法拦截响应异常:后台调用失败 响应异常拦截器可以帮助我们恢复后台调用
         if (response.config.url.toString().indexOf('http://') === 0) {
           $injector.get('$ionicLoading').hide();
+          if (response.status == 401) {
+            $injector.get('CommonService').platformPrompt("访问授权失败");
+          } else if (response.status == 404) {
+            $injector.get('CommonService').platformPrompt("访问连接404");
+          } else if (response.status == -1) {
+            $injector.get('CommonService').platformPrompt("网络请求超时");
+          }
         }
         return response;
       }
