@@ -79,8 +79,14 @@ angular.module('starter.directive', [])
               $rootScope.verifyarray[scope.$id] = false;
               $rootScope.verify = false;
             }
-            if(!value){ //非必填清空不再验证 可下一步
+            if (!attrs.required && value == null) {//非必填项 清空不验证
               $rootScope.verifyarray[scope.$id] = true;
+              $rootScope.verify = true;
+              angular.forEach($rootScope.verifyarray, function (item) {
+                if (!item) {
+                  $rootScope.verify = false;
+                }
+              });
             }
           }
         }
@@ -112,6 +118,22 @@ angular.module('starter.directive', [])
               $rootScope.verifyLeastOne = true;
             }
            })
+        }
+        scope.checkAtLeastOneIsSame = function (array, keystr1, keystr2) {  //两个数据 每种品类至少填写一个数据
+          var checkAtLeastOneIsSame = [];//每条记录的验证true false
+          angular.forEach(array, function (item, index) {
+            if (item.checked) {
+              checkAtLeastOneIsSame[index] = false;
+              angular.forEach(item.details, function (items) {
+                if (items[keystr1] || items[keystr2]) {
+                  checkAtLeastOneIsSame[index] = true;
+                }
+              })
+            }
+
+          })
+          $rootScope.checkAtLeastOneIsSame = checkAtLeastOneIsSame.indexOf(false) == -1 ? true : false; //有一个类别是false就是false
+
         }
       }
     }
