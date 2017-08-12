@@ -139,11 +139,11 @@
 
 .show-alert .button:first-child, .show-confirm .button:first-child, .show-updateconfirm .button:first-child {
   color: #33cd5f;
-  border-radius: 0 0 0rem 0.5rem;
+  border-bottom-left-radius: 0.5rem;
 }
 
 .show-alert .button:last-child, .show-confirm .button:last-child, .show-updateconfirm .button:last-child {
-  border-radius: 0 0 0.5rem 0rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 .show-alert .button:nth-child(2), .show-confirm .button:nth-child(2), .show-updateconfirm .button:nth-child(2) {
